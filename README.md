@@ -115,14 +115,12 @@ You'll see:
 
 ```
 ├── README.md              # This file
-├── SOURCES.md             # Every cited number with source links
 ├── live_demo.py           # Main demo — run this on stage (2 minutes)
 ├── setup_database.py      # Creates database, containers, seeds cache
 ├── config.py              # Configuration loader (reads .env)
 ├── requirements.txt       # Python dependencies
 ├── .env.example           # Template for credentials
 ├── .gitignore
-├── LICENSE
 └── screenshots/
     ├── dashboard.jpg       # Opening dashboard
     ├── cache-results.jpg   # Demo results with cache hit
