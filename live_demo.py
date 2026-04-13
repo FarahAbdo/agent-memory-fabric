@@ -1,17 +1,3 @@
-"""
-╔══════════════════════════════════════════════════════════════╗
-║  LIVE DEMO — Agent Memory Fabric                            ║
-║  Azure Cosmos DB Conf 2026 | Farah Abdou                    ║
-║                                                             ║
-║  Run:  python live_demo.py                                  ║
-╚══════════════════════════════════════════════════════════════╝
-
-Single-file, 2-minute live demo for stage.
-Shows the semantic cache in action: 3 agents, 3 queries,
-1 cache hit saves an LLM call. Opens with a dashboard,
-closes with cost impact.
-"""
-
 import time
 import uuid
 from openai import OpenAI
@@ -31,31 +17,34 @@ from config import (
 console = Console(width=72)
 
 
-# ─────────────────────────────────────────────────────────────
-#  COSMOS DB QUERY — this is what the audience needs to see
-# ─────────────────────────────────────────────────────────────
-
 VECTOR_SEARCH_SQL = """
 SELECT TOP 1
     c.question, c.response,
     VectorDistance(c.embedding, @v) AS similarity
 FROM   c
 WHERE  c.type = 'semantic-cache'
+    AND VectorDistance(c.embedding, @v) >= 0.80
 ORDER BY VectorDistance(c.embedding, @v)
 """
 
+# ── first run ──
+# AGENTS = [
+#     {"name": "Support Agent",  "color": "bright_blue",
+#      "query": "What is the refund policy for electronics?"},
+#     {"name": "Returns Agent",  "color": "bright_green",
+#      "query": "How can I return an electronic product?"},
+#     {"name": "Product Agent",  "color": "bright_yellow",
+#      "query": "What is the warranty on laptops?"},
+# ]
 
-# ─────────────────────────────────────────────────────────────
-#  AGENTS
-# ─────────────────────────────────────────────────────────────
-
+# ── second run ──
 AGENTS = [
     {"name": "Support Agent",  "color": "bright_blue",
-     "query": "What is the refund policy for electronics?"},
+     "query": "What is the electronics return and refund policy?"},
     {"name": "Returns Agent",  "color": "bright_green",
-     "query": "How can I return an electronic product?"},
+     "query": "How do I return an electronic item I bought?"},
     {"name": "Product Agent",  "color": "bright_yellow",
-     "query": "What is the warranty on laptops?"},
+     "query": "What warranty comes with a laptop?"},
 ]
 
 
@@ -79,7 +68,7 @@ def ask_llm(client: OpenAI, question: str) -> tuple[str, int]:
         ],
         max_tokens=120,
     )
-    return r.choices[0].message.content, r.usage.total_tokens
+    return r.choices[0].message.content, r.usage.total_tokens # type: ignore
 
 
 def cache_lookup(container, vector: list[float]) -> dict | None:
@@ -88,9 +77,7 @@ def cache_lookup(container, vector: list[float]) -> dict | None:
         parameters=[{"name": "@v", "value": vector}],
         enable_cross_partition_query=True,
     ))
-    if rows and rows[0]["similarity"] > SIMILARITY_THRESHOLD:
-        return rows[0]
-    return None
+    return rows[0] if rows else None
 
 
 def cache_store(container, q: str, resp: str, vec: list[float]):
@@ -283,7 +270,7 @@ def run_demo():
         "[bright_blue]Semantic Cache[/]  →  "
         "[bright_green]Change Feed[/]  →  "
         "[bright_magenta]ETag Concurrency[/]\n\n"
-        "[dim]No Redis. No Pinecone. No RabbitMQ.\n"
+        "[dim]\n"
         "Just Azure Cosmos DB.[/]",
         border_style="bright_white", padding=(1, 4),
     ))
