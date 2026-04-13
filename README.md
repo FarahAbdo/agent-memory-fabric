@@ -3,7 +3,7 @@
 **Cutting AI Agent Costs with Azure Cosmos DB: The Agent Memory Fabric**
 
 
-Multi-agent AI systems are powerful — but they bleed money. This repo shows how Azure Cosmos DB replaces 4 separate data systems (Redis + PostgreSQL + Pinecone + Kafka) with a single unified memory layer for AI agents.
+Multi-agent AI systems are powerful — but they bleed money. This repo shows how Azure Cosmos DB replaces 4 separate data systems with a single unified memory layer for AI agents.
 
 ## What This Demo Shows
 
