@@ -195,16 +195,6 @@ Every number in this presentation is backed by a public source. Below is the ful
 | Pinecone: $614 per 1M queries (43× more) | arXiv paper (Table 1) | [arXiv 2505.05885](https://arxiv.org/html/2505.05885v2) |
 | Zilliz: $220 per 1M queries (12× more) | arXiv paper (Table 1) | [arXiv 2505.05885](https://arxiv.org/html/2505.05885v2) |
 
-### 30-Day Production Results
-
-The numbers on the "30-Day Production Results" slide (68% LLM cost reduction, 94% latency reduction, 2.4M agent interactions/day, etc.) are from the Microsoft Cosmos DB engineering team's internal benchmarks, shared via the official conference speaker deck.
-
-### Reliability Math Derivation
-
-The reliability cascade calculation is a standard compound probability:
-- 1 agent at 95%: 0.95¹ = 95.0% → 500 failures/day at 10K requests
-- 3 agents at 95%: 0.95³ = 85.7% → 1,430 failures/day
-- 5 agents at 95%: 0.95⁵ = 77.4% → 2,260 failures/day
 
 ---
 
