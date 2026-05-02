@@ -1,6 +1,6 @@
 # Agent Memory Fabric — Azure Cosmos DB Conf 2026
 
-**Cutting AI Agent Costs with Azure Cosmos DB: The Agent Memory Fabric**
+**[Cutting AI Agent Costs with Azure Cosmos DB: The Agent Memory Fabric](https://youtu.be/Wo34Trg0Wyg?si=Tg1k7GkEbEjlSAAx)**
 
 
 Multi-agent AI systems are powerful — but they bleed money. This repo shows how Azure Cosmos DB replaces 4 separate data systems with a single unified memory layer for AI agents.
